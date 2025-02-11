@@ -1,0 +1,29 @@
+{
+  "name": "youtube-back",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "a youtube clone",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "mongoose",
+    "express",
+    "backend"
+  ],
+  "author": "Namra Vamja",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.0"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.10.0"
+  }
+}
