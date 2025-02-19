@@ -3,14 +3,16 @@ class ApiError extends Error {
     statusCode,
     message = "Internal Server Error",
     errors = [],
-    stack = ""
+    stack = "" // error stack
   ) {
     super(message);
     this.statusCode = statusCode;
+    this.data = null;
     this.message = message;
     this.success = false;
     this.errors = errors;
 
+    // optional
     if (stack) {
       this.stack = stack;
     } else {
