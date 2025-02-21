@@ -3,7 +3,7 @@ import ApiError from "../utils/ApiError";
 import asyncHandler from "../utils/asyncHandler";
 import jwt from "jsonwebtoken";
 
-export const verifyJWT = asyncHandler(async (req, res, next) => {
+export const verifyJWT = asyncHandler(async (req, _, next) => {
   try {
     const token =
       req.cookies?.accessToken ||
@@ -24,7 +24,6 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     }
     req.user = user;
     next();
-    
   } catch (error) {
     throw new ApiError(401, "Unauthorized");
   }
