@@ -146,7 +146,7 @@ const loginUser = asyncHandler(async (req, res) => {
 const logoutUser = asyncHandler(async (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
-    { $set: { refreshToken: undefined } },
+    { $unset: { refreshToken: 1 } },
     { new: true }
   );
 
@@ -370,7 +370,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
   console.log(channel);
 
-  if (channel?.length()) {
+  if (!channel?.length) {
     throw new ApiError(404, "channel does not exists");
   }
 
@@ -396,19 +396,21 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         as: "watchHistory",
         pipeline: [
           {
-            $lookup: "users",
-            localField: "owner",
-            foreignField: "_id",
-            as: "owner",
-            pipeline: [
-              {
-                $project: {
-                  fullName: 1,
-                  username: 1,
-                  avatar: 1,
+            $lookup: {
+              from: "users",
+              localField: "owner",
+              foreignField: "_id",
+              as: "owner",
+              pipeline: [
+                {
+                  $project: {
+                    fullName: 1,
+                    username: 1,
+                    avatar: 1,
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
         ],
       },
@@ -423,7 +425,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
   ]);
   return res
     .status(200)
-    .json(new ApiResponse(200, user[0].WatchHistory, "watch history fetched"));
+    .json(new ApiResponse(200, user[0].watchHistory, "watch history fetched"));
 });
 
 export {
